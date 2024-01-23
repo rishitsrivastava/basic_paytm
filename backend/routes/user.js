@@ -1,10 +1,8 @@
 const express = require("express");
-const app = express();
 const { User } = require("../db")
 const zod = require("zod");
 const jwt = require("jsonwebtoken")
 const { JWT_secret } = require("../config")
-
 const userRouter = express.Router();
 
 const signupbody = zod.object({
@@ -12,6 +10,10 @@ const signupbody = zod.object({
     password: zod.string(),
     firstname: zod.string(),
     lastname: zod.string()
+})
+const signinbody = zod.object({
+    username: zod.string().email(),
+    password: zod.string()
 })
 
 userRouter.post("/signup", async (req, res) => {
@@ -36,9 +38,9 @@ userRouter.post("/signup", async (req, res) => {
         firstname: req.body.firstname,
         lastname: req.body.lastname
     })
-    const userID = user._id;
+    const userId = user._id;
     const token = jwt.sign({
-        userID
+        userId
     }, JWT_secret);
     res.json({
         message: "User created successfully",
@@ -47,7 +49,28 @@ userRouter.post("/signup", async (req, res) => {
 })
 
 userRouter.post("/signin", async(req, res) => {
-    
+    const {success} = signinbody.safaparse(req.body);
+    if(!success) {
+        return res.status(411).json({
+            message: "email already taken or incorrect inputs"
+        })
+    }
+    const user = await User.findOne({
+        username: req.body.username,
+        password: req.body.password
+    });
+    if(user) {
+        const token = jwt.sign({
+            userId : user._id
+        }, JWT_secret);
+        res.json({
+            token:token
+        })
+        return;
+    }
+    res.status(411).json({
+        message: "error while logging in"
+    })
 })
 
 module.exports = {
