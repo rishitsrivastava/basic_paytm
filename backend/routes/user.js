@@ -22,6 +22,7 @@ const updatebody = zod.object({
     lastname: zod.string().optional()
 })
 
+
 userRouter.post("/signup", async (req, res) => {
     const { success } = signupbody.safeParse(req.body);
     if(!success) {
@@ -58,6 +59,7 @@ userRouter.post("/signup", async (req, res) => {
     })
 })
 
+
 userRouter.post("/signin", async(req, res) => {
     const {success} = signinbody.safaparse(req.body);
     if(!success) {
@@ -83,6 +85,7 @@ userRouter.post("/signin", async(req, res) => {
     })
 })
 
+
 userRouter.put("/", authMiddleware, async(res, req) => {
     const { success } = updatebody.safeParse(req.body);
     if(!success) {
@@ -97,6 +100,7 @@ userRouter.put("/", authMiddleware, async(res, req) => {
         message: "updated successfully"
     })
 })
+
 
 userRouter.get("/bulk", async(req, res) => {
     const filter = req.query.filter || "";
