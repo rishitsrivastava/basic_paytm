@@ -24,19 +24,21 @@ const updatebody = zod.object({
 
 
 userRouter.post("/signup", async (req, res) => {
-    const { success } = signupbody.safeParse(req.body)
+    const { success } = signupbody.safeParse(req.body); // we can also do const success = signupSchema.safeparse(req.body).success
+   
+    const person = await User.findOne({
+      username: req.body.username,
+    });
     if (!success) {
-        return res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
-        })
+      return res.status(411).json({
+        msg: "incorrect-input",
+      });
     }
-    const existingUser = await User.findOne({
-        username: req.body.username
-    })
-    if (existingUser) {
-        return res.status(411).json({
-            message: "Email already taken/Incorrect inputs"
-        })
+  
+    if (person) {
+      return res.status(411).json({
+        msg: "user already exists",
+      });
     }
     const user = await User.create({
         username: req.body.username,
@@ -45,10 +47,12 @@ userRouter.post("/signup", async (req, res) => {
         lastName: req.body.lastName,
     })
     const userId = user._id;
+
     await Account.create({
         userId,
         balance: 1 + Math.random() * 10000
     })
+
     const token = jwt.sign({
         userId
     }, JWT_Secret);
@@ -61,7 +65,7 @@ userRouter.post("/signup", async (req, res) => {
 
 
 userRouter.post("/signin", async(req, res) => {
-    const {success} = signinbody.safaparse(req.body);
+    const {success} = signinbody.safeParse(req.body);
     if(!success) {
         return res.status(411).json({
             message: "email already taken or incorrect inputs"
