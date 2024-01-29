@@ -5,6 +5,7 @@ import InputBox from '../components/InputBox'
 import Button from '../components/Button'
 import ButtonWarning from '../components/ButtonWarning'
 import { useNavigate } from 'react-router-dom'
+import axios from "axios";
 
 export default function Signup() {
   const [firstName, setFirstName] = useState("");
