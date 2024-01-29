@@ -8,30 +8,30 @@ const { authMiddleware } = require("../middleware")
 
 const signupbody = zod.object({
     username: zod.string().email(),
-    password: zod.string(),
     firstName: zod.string(),
-    lastName: zod.string()
-})
+    lastName: zod.string(),
+    password: zod.string()
+});
 const signinbody = zod.object({
     username: zod.string().email(),
     password: zod.string()
-})
+});
 const updatebody = zod.object({
     password: zod.string().optional(),
     firstname: zod.string().optional(),
     lastname: zod.string().optional()
-})
+});
 
 
 userRouter.post("/signup", async (req, res) => {
-    const { success } = signupbody.safeParse(req.body); // we can also do const success = signupSchema.safeparse(req.body).success
+    const { success } = signupbody.safeParse(req.body) // we can also do const success = signupSchema.safeparse(req.body).success
    
     const person = await User.findOne({
       username: req.body.username,
     });
     if (!success) {
       return res.status(411).json({
-        msg: "incorrect-input",
+        msg: "Email already taken / Incorrect inputs",
       });
     }
   
@@ -122,8 +122,8 @@ userRouter.get("/bulk", async(req, res) => {
     res.json({
         user: users.map(user => ({
             username: user.username,
-            firstname: user.firstname,
-            lastname: user.lastname,
+            firstName: user.firstName,
+            lastName: user.lastName,
             _id: user._id
         }))
     })
