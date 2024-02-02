@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Appbar() {
   return (
-    <div className='shadow bg-slate-800 text-slate-300 h-14 flex justify-between'>
+    <div className='shadow font-semibold bg-slate-800 text-slate-300 h-14 flex justify-between'>
         <div className='flex text-lg cursor-pointer flex-col justify-center h-full ml-4'>
             PayTM App
         </div>
