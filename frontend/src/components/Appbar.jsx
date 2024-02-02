@@ -7,8 +7,8 @@ export default function Appbar() {
             PayTM App
         </div>
         <div className='flex mr-4 justify-center'>
-          <div className='underline text-lg flex flex-col justify-center h-full'>
-            Hello
+          <div className='text-lg italic flex flex-col justify-center h-full'>
+            Hey Bro 🤝
           </div>
           <div className='ml-2'>
             <div className='pt-4 pb-8'>
@@ -21,3 +21,4 @@ export default function Appbar() {
     </div>
   )
 }
+
