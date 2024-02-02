@@ -29,8 +29,8 @@ export default function Send() {
             <input placeholder='Enter amount' className='rounded-lg pl-2' />
           </div>
         </div>
-        <div className='mt-6'>
-          <Button label={"Send"} />
+        <div className='flex flex-col justify-center bg-slate-950 hover:bg-slate-300 hover:text-slate-950 transition font-medium p-1.5 rounded-md mt-6'>
+          <button onClick={() => {alert("bro come on, you are too poor to send money")}}>Send</button>
         </div>
       </div>
     </div>
