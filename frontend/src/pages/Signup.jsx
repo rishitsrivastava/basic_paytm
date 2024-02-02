@@ -19,10 +19,10 @@ export default function Signup() {
       const url = "http://localhost:3000/api/v1/user/signup";
 
       const userData = {
-        userName: "userName",
-        password: "password",
-        firstName: "firstName",
-        lastName: "lastName"
+        username: userName,
+        password,
+        firstName,
+        lastName
       };
       const response = await axios.post(url, userData, {
         withCredentials: true
