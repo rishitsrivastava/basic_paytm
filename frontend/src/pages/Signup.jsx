@@ -24,7 +24,9 @@ export default function Signup() {
         firstName: "firstName",
         lastName: "lastName"
       };
-      const response = await axios.post(url, userData)
+      const response = await axios.post(url, userData, {
+        withCredentials: true
+      })
 
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
